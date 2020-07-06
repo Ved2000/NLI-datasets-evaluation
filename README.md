@@ -13,4 +13,8 @@ import pandas as pd
 read_file = pd.read_csv('path_to_hans.txt',delimiter='\t')
 ```
 # Allen NLP model
-Allen NLP model is trained on 
+Allen NLP model is trained on SNLI datasets to test it on Hans and MLNI datasets run the notebooks added accordingly.
+
+# Infersent Model
+*InferSent* is a *sentence embeddings* method that provides semantic representations for English sentences. It is trained on natural language inference data and generalizes well to many different tasks.
+ To test it on MultiNLI dataset and HANS replace SNLI dataset files with corresponding files and test it either using notebook added or following instructions on their repository.

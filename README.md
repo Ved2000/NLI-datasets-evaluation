@@ -7,7 +7,7 @@ For downloading and obtaining formatted SNLI and MultiNLI datasets run the follo
 chmod u+r+x get_transfer_data.bash
 ./get_transfer_data.bash
 ```
-Hans.txt is HANS dataset in Json format it simply convert it to a python dataframe and use it accordingly:*
+Hans.txt is HANS dataset in Json format, simply convert it to a pandas dataframe and use it accordingly:*
 ```python
 import pandas as pd
 read_file = pd.read_csv('path_to_hans.txt',delimiter='\t')

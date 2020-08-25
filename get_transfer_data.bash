@@ -29,7 +29,7 @@ PTBTOKENIZER="sed -f tokenizer.sed"
 mkdir $data_path
 
 
-
+SICK='http://alt.qcri.org/semeval2014/task1/data/uploads'
 MNLI='https://www.nyu.edu/projects/bowman/multinli/multinli_0.9.zip'
 SNLI='https://nlp.stanford.edu/projects/snli/snli_1.0.zip'
 
@@ -71,6 +71,32 @@ do
     rm $fpath
 done
 rm -r $data_path/SNLI/snli_1.0
+
+### download SICK
+mkdir $data_path/SICK
+
+for split in train trial test_annotated
+do
+    urlname=$SICK/sick_$split.zip
+    curl -Lo $data_path/SICK/sick_$split.zip $urlname
+    unzip $data_path/SICK/sick_$split.zip -d $data_path/SICK/
+    rm $data_path/SICK/readme.txt
+    rm $data_path/SICK/sick_$split.zip
+done
+
+for split in train trial test_annotated
+do
+    fname=$data_path/SICK/SICK_$split.txt
+    cut -f1 $fname | sed '1d' > $data_path/SICK/tmp1
+    cut -f4,5 $fname | sed '1d' > $data_path/SICK/tmp45
+    cut -f2 $fname | sed '1d' | $MTOKENIZER -threads 8 -l en -no-escape > $data_path/SICK/tmp2
+    cut -f3 $fname | sed '1d' | $MTOKENIZER -threads 8 -l en -no-escape > $data_path/SICK/tmp3
+    head -n 1 $fname > $data_path/SICK/tmp0
+    paste $data_path/SICK/tmp1 $data_path/SICK/tmp2 $data_path/SICK/tmp3 $data_path/SICK/tmp45 >> $data_path/SICK/tmp0
+    mv $data_path/SICK/tmp0 $fname
+    rm $data_path/SICK/tmp*
+done
+
 
 
 
